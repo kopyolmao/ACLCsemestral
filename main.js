@@ -2,25 +2,19 @@
     'use strict';
 
     // 1. Safety Check: Are we on the login page?
-    // We check the body ID because your loader runs on EVERY page of the site.
     if (document.body.id !== 'page-login-index') {
         console.log("Modern UI Injector: Not on login page, skipping UI override.");
         return; 
     }
 
-    console.log("Modern UI Injector: Login page detected. Applying Glassmorphism...");
+    console.log("Modern UI Injector: Login page detected. Applying Glassmorphism safely...");
 
     function applyModernUI() {
         const style = document.createElement('style');
         style.innerHTML = `
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');
 
-        /* Nuke Moodle's unnecessary elements */
-        nav, .toast-wrapper, #page-footer, .login-divider, .btn-secondary, .logininfo, .tool_dataprivacy { 
-            display: none !important; 
-        }
-
-        /* Ambient gradient background */
+        /* 1. Ambient gradient background & Core Body */
         body {
             font-family: 'Outfit', sans-serif !important;
             margin: 0 !important;
@@ -33,25 +27,38 @@
             background-size: cover !important;
             background-repeat: no-repeat !important;
             background-attachment: fixed !important;
+            color: #e2e8f0 !important;
+            display: flex !important;
+            flex-direction: column !important;
             min-height: 100vh !important;
-            color: #fff !important;
         }
 
-        /* Center the layout */
-        #page-wrapper, #page, #page-content, #region-main-box, #region-main, .login-wrapper {
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            height: 100vh !important;
+        /* 2. Layout Structure: Center card, keep footer at bottom */
+        #page-wrapper {
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        #page {
+            flex: 1 !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            width: 100% !important;
             margin: 0 !important;
-            padding: 0 !important;
+            padding: 2rem !important;
         }
 
-        /* Glassmorphism Card */
+        #page-content, #region-main-box, #region-main, .login-wrapper {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            width: 100% !important;
+            display: flex !important;
+            justify-content: center !important;
+        }
+
+        /* 3. The Glassmorphism Card */
         .login-container {
             background: rgba(17, 25, 40, 0.65) !important;
             backdrop-filter: blur(16px) saturate(180%) !important;
@@ -73,20 +80,20 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        /* Typography */
+        /* Typography & Headings */
         .loginform h1.login-heading {
             font-family: 'Outfit', sans-serif !important;
             color: #ffffff !important;
             font-weight: 600 !important;
-            font-size: 26px !important;
-            margin-bottom: 35px !important;
+            font-size: 24px !important;
+            margin-bottom: 30px !important;
             text-align: center !important;
             letter-spacing: -0.5px !important;
         }
 
         /* Inputs */
         .form-group {
-            margin-bottom: 22px !important;
+            margin-bottom: 20px !important;
             position: relative !important;
             width: 100% !important;
         }
@@ -94,7 +101,7 @@
         .form-control {
             background: rgba(0, 0, 0, 0.25) !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            border-radius: 14px !important;
+            border-radius: 12px !important;
             color: #ffffff !important;
             padding: 16px 20px !important;
             font-size: 15px !important;
@@ -116,21 +123,19 @@
             font-weight: 400 !important;
         }
 
-        /* Button */
+        /* The Login Button */
         .btn-primary {
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
             border: none !important;
-            border-radius: 14px !important;
+            border-radius: 12px !important;
             color: white !important;
             font-size: 16px !important;
             font-weight: 600 !important;
-            padding: 16px !important;
+            padding: 14px !important;
             width: 100% !important;
             transition: all 0.3s ease !important;
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
-            margin-top: 15px !important;
             cursor: pointer !important;
-            letter-spacing: 0.5px !important;
         }
 
         .btn-primary:hover {
@@ -138,11 +143,10 @@
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5) !important;
         }
 
-        /* Links */
+        /* Forgot Password Link */
         .login-form-forgotpassword {
             text-align: center !important;
-            margin-top: 25px !important;
-            margin-bottom: 0 !important;
+            margin-top: 20px !important;
         }
 
         .login-form-forgotpassword a {
@@ -157,7 +161,67 @@
             color: #ffffff !important;
         }
 
-        /* Password Toggle SVG */
+        /* Divider & Cookies Button */
+        .login-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            margin: 25px 0 20px 0 !important;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 12px !important;
+            color: #94a3b8 !important;
+            width: 100% !important;
+            padding: 12px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+        }
+
+        /* 4. Restyling the Footer to fit the theme */
+        #page-footer {
+            background: rgba(15, 23, 42, 0.8) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+            color: #94a3b8 !important;
+            padding: 1rem 0 !important;
+            margin-top: auto !important;
+        }
+
+        #page-footer a {
+            color: #818cf8 !important;
+            text-decoration: none !important;
+        }
+
+        #page-footer a:hover {
+            color: #a5b4fc !important;
+        }
+
+        .footer-content-popover, .footer-section {
+            background: transparent !important;
+            border-color: rgba(255, 255, 255, 0.05) !important;
+            color: #94a3b8 !important;
+        }
+
+        .btn-footer-popover {
+            background: #1e293b !important;
+            color: #e2e8f0 !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: none !important;
+        }
+
+        .footer-dark {
+            background: transparent !important;
+        }
+
+        /* Proper SVG Password Toggle */
         .password-toggle {
             position: absolute !important;
             right: 18px !important;
@@ -184,7 +248,7 @@
         `;
         document.head.appendChild(style);
 
-        // Inject the SVG Toggle
+        // Enhance the password field with a professional SVG toggle
         const passwordField = document.getElementById('password');
         
         if (passwordField) {
@@ -210,8 +274,6 @@
         }
     }
 
-    // Because your Tampermonkey loader waits for window.load before fetching this,
-    // the DOM is already ready by the time this executes. 
     applyModernUI();
 
 })();
