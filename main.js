@@ -33,7 +33,7 @@
         body#page-login-index nav, 
         body#page-login-index .toast-wrapper, 
         body#page-login-index .logininfo, 
-        body#page-login-index button[data-modal="alert"], /* Hides Moodle's default cookie button */
+        body#page-login-index button[data-modal="alert"], 
         body#page-login-index .tool_dataprivacy { 
             display: none !important; 
         }
@@ -64,7 +64,7 @@
 
         /* LEFT SIDE: Hero Image */
         .moodle-hero-bg {
-            flex: 5.5 !important; /* Takes up 55% of the screen */
+            flex: 5.5 !important;
             background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2000&auto=format&fit=crop');
             background-size: cover !important;
             background-position: center !important;
@@ -109,9 +109,9 @@
             font-weight: 300 !important;
         }
 
-        /* RIGHT SIDE: Login Panel */
+        /* RIGHT SIDE: Login Panel Container */
         body#page-login-index .login-container {
-            flex: 4.5 !important; /* Takes up 45% of the screen */
+            flex: 4.5 !important; 
             min-width: 450px !important;
             background: #0f172a !important;
             box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5) !important;
@@ -128,11 +128,19 @@
             z-index: 10 !important;
         }
 
+        /* Fix Moodle's hidden wrapper div so flexbox works */
+        body#page-login-index .login-container [role="main"] {
+            width: 100% !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+
         /* Limit the width of the form inside the panel */
         body#page-login-index .loginform {
             width: 100% !important;
             max-width: 380px !important;
-            margin-bottom: 50px !important; /* Give space for footer */
+            margin: 0 auto !important; /* Locks it dead center horizontally */
             animation: formSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
             transform: translateY(20px);
             opacity: 0;
@@ -198,7 +206,7 @@
 
         body#page-login-index .login-form-forgotpassword { text-align: left !important; margin-top: 20px !important; }
         body#page-login-index .login-form-forgotpassword a { color: #a5b4fc !important; text-decoration: none !important; font-size: 14px !important; font-weight: 500 !important; }
-        body#page-login-index .login-divider { display: none !important; } /* We don't need this anymore */
+        body#page-login-index .login-divider { display: none !important; }
 
         /* SVG Toggle */
         body#page-login-index .password-toggle {
@@ -213,7 +221,7 @@
             position: absolute !important;
             bottom: 0 !important;
             right: 0 !important;
-            width: 45% !important; /* Matches right panel width */
+            width: 45% !important; 
             background: transparent !important;
             border: none !important;
             color: #64748b !important;
@@ -274,7 +282,7 @@
             const passwordField = document.getElementById('password');
             
             if (loginWrapper && passwordField) {
-                clearInterval(domInterval); // Stop hunting once elements exist
+                clearInterval(domInterval);
 
                 // --- A. Inject Hero Side ---
                 if (!document.querySelector('.moodle-hero-bg')) {
@@ -286,7 +294,7 @@
                             <p>Log in to access your dashboard, connect with peers, and seamlessly manage your academic journey.</p>
                         </div>
                     `;
-                    loginWrapper.prepend(hero); // Adds to the left side of the flexbox
+                    loginWrapper.prepend(hero); 
                 }
 
                 // --- B. Inject SVG Password Toggle ---
@@ -332,14 +340,13 @@
                     `;
                     document.body.appendChild(toast);
 
-                    // Hover & Close Logic for Toast
                     const closeBtn = document.getElementById('close-cookie-toast');
                     closeBtn.addEventListener('mouseover', () => { closeBtn.style.color = '#fff'; closeBtn.style.background = 'rgba(255,255,255,0.15)'; });
                     closeBtn.addEventListener('mouseout', () => { closeBtn.style.color = '#94a3b8'; closeBtn.style.background = 'rgba(255,255,255,0.05)'; });
 
                     closeBtn.addEventListener('click', () => {
                         toast.classList.add('slide-out');
-                        setTimeout(() => toast.remove(), 500); // Matches animation duration
+                        setTimeout(() => toast.remove(), 500); 
                     });
                 }
 
